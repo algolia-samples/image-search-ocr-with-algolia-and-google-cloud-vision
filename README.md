@@ -1,64 +1,81 @@
-# Delivery scanner with Algolia and Google Cloud Vision
+# Image search with optical character recognition, Algolia and Slack notifications
 
-This sample shows you how to implement a delivery "scanner" using Algolia, [Google Cloud Vision](https://cloud.google.com/vision).
+This sample app lets you scan a shipping label with your phone and sends a Slack message to the recipient of the package. The app combines optical character recognition (OCR), Algolia search, and Slack notifications. 
 
 ![A flowchart of the delivery scanner sample](https://blog-api.algolia.com/wp-content/uploads/2019/05/diagram-algo-package.jpg)
 
-You can read more about the story and the problem we were trying to solve on the [Algolia blog](https://www.algolia.com/blog/engineering/simplifying-parcel-delivery-algolia/).
+Read more about how we use this app at Algolia on the [Algolia blog](https://www.algolia.com/blog/engineering/simplifying-parcel-delivery-algolia/).
 
 ## Features
-- 📱📷  Detect and extract text from an image with [Google Cloud Vision](https://cloud.google.com/vision).
-- 🔎  Quickly match a record from a search query with a lot of "noise" with [Algolia `removeWordsIfNoResults` parameter](https://www.algolia.com/doc/api-reference/api-parameters/removeWordsIfNoResults/).
-- 💌📦  Notify people using [Slack bots](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace).
 
-## Demo
+The sample app uses the following features:
 
-<img src="demo/demo.gif?raw=true" alt="A short movie displaying the Algolia delivery scanner application" align="center">
+- 📱📷 Detect and extract text from an image with [Google Cloud Vision](https://cloud.google.com/vision).
+- 🔎 Remove "noise" from a search query and find matching results with Algolia's[`removeWordsIfNoResults`](https://www.algolia.com/doc/api-reference/api-parameters/removeWordsIfNoResults/) parameter.
+- 💌📦 Notify people using [Slack bots](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace).
 
-1. Flash this QR Code with your mobile phone to access the demo👇
+## Demo (Try it yourself!)
+
+This short clip demonstrates how to use the sample app:
+
+<img src="demo/demo.gif?raw=true" alt="A short video clip displaying the Algolia delivery scanner application" align="center">
+
+Follow these steps to use the demo app with a sample index.
+
+1. Scan this QR code with your phone to open the demo app👇
 
 <details>
-  <summary>QR Code</summary>
-  <img src="demo/qr_code.png?raw=true" alt="A QR Code to access the Algolia delivery scanner application" align="center">
+  <summary>QR code</summary>
+  <img src="demo/qr_code.png?raw=true" alt="A QR code to access the Algolia shipping label scanner application" align="center">
 </details>
 
-2. Scan the delivery👇
+2. Scan the shipping label👇
 
 <details>
-  <summary>Delivery picture</summary>
+  <summary>Shipping label</summary>
   <img src="demo/parcel-label.jpg?raw=true" alt="A picture of a parcel" align="center">
 </details>
 
-## How to run locally
+## How to run the sample app locally
 
-This sample includes 3 server implementations in [Python](server/python), [JavaScript (Node)](server/node), [Go](server/go).
+The sample app implements three servers in these programming languages: 
 
-The [client](client) is a single HTML page with some Vanilla Javascript.
+- [Python](server/python)
+- [Node.js/JavaScript](server/node)
+- [Go](server/go)
 
-**1. Clone and configure the sample**
+The [client](client) is a single HTML page with Vanilla JavaScript.
 
-```
+### 1. Clone this repository
+
+```bash
 git clone https://github.com/algolia-samples/delivery-scanner
 ```
 
-Copy the .env.example file into a file named .env in the folder of the server you want to use. For example:
+Copy the file `.env.example` to the directory of the server you want to use and rename it to `.env.`.
+For example, to use the Go implementation:
 
-```
+```bash
 cp .env.example server/go/.env
 ```
 
-You will need an Algolia account in order to run the demo. If you don't have already an account, you can [create one for free](https://www.algolia.com/users/sign_up).
+### 2. Set up Algolia
+
+To use this sample app, you need an Algolia account. If you don't have one already, [create an account for free](https://www.algolia.com/users/sign-up). Note your [Application ID](https://deploy-preview-5789--algolia-docs.netlify.app/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id) and [API key](https://deploy-preview-5789--algolia-docs.netlify.app/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-with-the-api/#application-id).
+
+In the `.env` file, set the environment variables `ALGOLIA_APP_ID` and `ALGOLIA_API_KEY` to the values from your Algolia account.
 
 ```bash
 ALGOLIA_APP_ID=<replace-with-your-algolia-app-id>
 ALGOLIA_API_KEY=<replace-with-your-algolia-api-key>
 ```
 
-**2. Create and populate your Algolia index**
+### 3. Create your Algolia index and upload data
 
-Once your Algolia account and your Algolia application are setup, you will need to [create and populate an index](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/).
+[Create and populate an index](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/)
+with names, Slack IDs, and images of people you want to notify.
 
-The application is expecting your index records to have the following shape:
+The sample app expects the index record to follow this structure:
 ```json
 {
     "displayName": "Jane Doe",
@@ -69,33 +86,38 @@ The application is expecting your index records to have the following shape:
 }
 ```
 
-You can either upload your data directly from the [Algolia dashboard](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-from-the-dashboard/) or by using one of our [API clients](https://www.algolia.com/developers/#integrations).
+To upload your data, you can use the [Algolia dashboard](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/importing-from-the-dashboard/) or use on of Algolia's [API clients](https://www.algolia.com/developers/#integrations).
 
-Once your index is populated, you can now fill the last Algolia-related environment variable:
+After creating the index and uploading the data, set the environment variable `ALGOLIA_INDEX_NAME` in the `.env` file:
 
 ```bash
 ALGOLIA_INDEX_NAME=<replace-with-your-algolia-index-name>
 ```
 
-**3. Google Cloud Vision and Slack**
+### 4. Set up Google Cloud Vision and Slack
 
-Follow the intructions at the [Google Cloud Vision documentation](https://cloud.google.com/vision/docs/ocr) and fill the related environment variable:
+[**Set up your Google Cloud account**](https://cloud.google.com/vision/docs/ocr) to use the Google Cloud Vision API.
+In the `.env` file, set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of your credentials file:
 
 ```bash
 GOOGLE_APPLICATION_CREDENTIALS=<replace-with-the-path-of-your-credentials-file>
 ```
 
-[Create a Slack application](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace) and fill the environment variable:
+[Create a Slack application](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace) and set the environment variable `SLACK_TOKEN` in the file `.env`:
 
 ```bash
 SLACK_TOKEN=<replace-with-the-slack-bot-token>
 ```
 
-**4. Follow the server instructions on how to run**
+### 5. Follow the instructions in the server directory 
 
-Pick the server language you want and follow the instructions in the server folder README on how to run.
+Each server directory has a file with instructions: 
 
-For example, if you want to run the Python server:
+- [Go](server/go/README)
+- [Node.js](server/node/README)
+- [Python](server/python/README)
+
+For example, to run the Python implementation of the server, follow these steps:
 
 ```
 cd server/python # there's a README in this folder with instructions
@@ -106,5 +128,26 @@ export FLASK_APP=server.py
 python3 -m flask run --port=4242
 ```
 
+## FAQ
+
+<details>
+  <summary>Can we use other OCR technology?</summary>
+  ANSWER (probably yes)
+</details>
+
+<details>
+  <summary>Do I have to use Algolia to search the name?</summary>
+  ANSWER (noisy text cleaning, fast search results)
+</details>
+
+<details>
+  <summary>What are other potential applications of image search</summary>
+</details>
+
+## Get Support
+
+TO BE DETERMINED. Discourse and what not.
+
 ## Authors
+
 - [@cdenoix](https://twitter.com/cdenoix)

@@ -1,8 +1,8 @@
-# Delivery scanner - Javascript / Node backend
+# Image search: Shipping label scanner - Node.js/JavaScript back end
 
 ## Requirements
 
-- Node v10+
+- Node.js, at least version 10
 - [Configured .env file](../../README.md)
 
 ## How to run

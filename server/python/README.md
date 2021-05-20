@@ -1,15 +1,15 @@
-# Delivery scanner - Python backend
+# Image search: Shipping label scanner - Python back end
 
 ## Requirements
 
-- Python 3.6+
+- Python, at least version 3.6
 - [Configured .env file](../../README.md)
 
 ## How to run
 
 1. Create and activate a new [virtual environment](https://docs.python.org/fr/3/library/venv.html).
 
-**MacOS / Unix**
+**MacOS/Unix**
 
 ```
 python3 -m venv env
@@ -31,7 +31,7 @@ pip install -r requirements.txt
 
 3. Run the application
 
-**MacOS / Unix**
+**MacOS/Unix**
 
 ```
 export FLASK_APP=server.py
