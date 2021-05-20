@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Algolia Delivery Scanner sample</title>
+        <meta name="description" content="A demo of a delivery scanner using Algolia, Google Cloud Vision and Slack." />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <div class="banner">
+            <span>This is an
+                <a href="https://github.com/algolia-samples"> Algolia sample</a> 
+                allowing to scan a delivery, find and notify the recipient.
+                <a href="https://github.com/algolia-samples/delivery-scanner"> 
+                    View code on GitHub.
+                </a>
+            </span>
+        </div>
+        <div class="banner error" id="error-container">
+            <span>Error: <span id="error-text"></span></span>
+        </div>
+        <video id="video" playsinline autoplay>Video stream not available.</video>
+        <a id="action-scan" class="btn btn-primary">Scan package's label</a>
+        <canvas id="canvas"></canvas>
+        <div class="employee-container">
+            <div id="employee">
+                <img id="employee-picture" src="https://thispersondoesnotexist.com/image"/>
+                <h2 id="employee-name">Test</h2>
+                <input type="hidden" id="slack-id">
+                <a class="btn btn-primary" id="action-notify">You got a 📦!</a>
+                <a class="btn btn-secondary" id="action-cancel">Cancel</a>
+            </div>
+        </div>
+    </body>
+</html>

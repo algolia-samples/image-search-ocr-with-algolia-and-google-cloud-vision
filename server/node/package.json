@@ -1,0 +1,21 @@
+{
+    "name": "delivery-scanner",
+    "version": "1.0.0",
+    "description": "Scan and notify package's recipients using Algolia, Google Cloud Vision and Slack.",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "algolia-samples",
+    "license": "ISC",
+    "dependencies": {
+        "@google-cloud/vision": "^2.3.1",
+        "@slack/web-api": "^6.1.0",
+        "algoliasearch": "^4.9.1",
+        "body-parser": "^1.19.0",
+        "dotenv": "^8.0.0",
+        "express": "^4.17.1",
+        "express-fileupload": "^1.2.1"
+    }
+}
