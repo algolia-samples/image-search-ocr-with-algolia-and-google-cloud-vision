@@ -128,26 +128,6 @@ export FLASK_APP=server.py
 python3 -m flask run --port=4242
 ```
 
-## FAQ
-
-<details>
-  <summary>Can we use other OCR technology?</summary>
-  ANSWER (probably yes)
-</details>
-
-<details>
-  <summary>Do I have to use Algolia to search the name?</summary>
-  ANSWER (noisy text cleaning, fast search results)
-</details>
-
-<details>
-  <summary>What are other potential applications of image search</summary>
-</details>
-
-## Get Support
-
-TO BE DETERMINED. Discourse and what not.
-
 ## Authors
 
 - [@cdenoix](https://twitter.com/cdenoix)
