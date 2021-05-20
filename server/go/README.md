@@ -1,4 +1,4 @@
-# Delivery scanner - Go backend
+# Image search: Shipping label scanner - Go back end
 
 ## Requirements
 
