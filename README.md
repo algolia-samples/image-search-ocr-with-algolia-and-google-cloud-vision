@@ -27,7 +27,7 @@ Depending on the quality of the scan, the Google Cloud Vision API might return a
 }
 ```
 
-The extracted text isn't "clean" and contains extra characters. The format of the name is last name, first name. In other cases, it might be the other way. You could write your own logic to parse the name, or you can leave this to Algolia.
+The extracted text isn't "clean" and contains extra characters. You could try to write your own logic to extract the person first name / last name from the extracted text, or you can leave this part to Algolia!
 
 ### 🔎 Remove "noise" from a search query and find matching results with Algolia.
 
