@@ -10,9 +10,53 @@ Read more about how we use this app at Algolia on the [Algolia blog](https://www
 
 The sample app uses the following features:
 
-- 📱📷 Detect and extract text from an image with [Google Cloud Vision](https://cloud.google.com/vision).
-- 🔎 Remove "noise" from a search query and find matching results with Algolia's[`removeWordsIfNoResults`](https://www.algolia.com/doc/api-reference/api-parameters/removeWordsIfNoResults/) parameter.
-- 💌📦 Notify people using [Slack bots](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace).
+### 📱📷 Detect and extract text from an image with [Google Cloud Vision](https://cloud.google.com/vision).
+
+Depending on the quality of the scan, the Google Cloud Vision API might return a response like this: 
+   
+```
+{
+  "textAnnotations" : [
+    {
+      "description": "ORY1\n0.7 KG\nDENOIX Clément\nALGOLIA\n55 rue d'Amsterdam\n75008 Paris, France\nC20199352333\nDIF4\nCYCLE\nlove of boo\nAnod",
+      ...
+    },
+    ...
+  ],
+  ...
+}
+```
+
+The extracted text isn't "clean" and contains extra characters. The format of the name is last name, first name. In other cases, it might be the other way. You could write your own logic to parse the name, or you can leave this to Algolia.
+
+### 🔎 Remove "noise" from a search query and find matching results with Algolia.
+
+With the [`removeWordsIfNoResults`](https://www.algolia.com/doc/api-reference/api-parameters/removeWordsIfNoResults/) parameter set to `allOptional`, Algolia treats all words in the search query as optional. To make it easier for Algolia to recognize the individual words, we replace all newline characters with spaces and perform the following query:
+  
+```
+{
+  query: "ORY1 0.7 KG DENOIX Clément ALGOLIA 55 rue d'Amsterdam 75008 Paris, France C20199352333 DIF4 CYCLE love of boo Anod",
+  removeWordsifNoResults: "allOptional",
+  ...
+}
+```
+  
+If Algolia finds the name, it returns the name and corresponding Slack ID:
+  
+```
+{
+  hits: [
+    {
+      "displayName": "Clément Denoix",
+      "slackID": "<SLACK_HANDLE>"
+    }
+  ]
+}
+```
+   
+### 💌📦 Notify people using [Slack bots](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace).
+
+If the Slack ID is found, a Slack bot sends a message to the user: "A :package: is waiting for you at the front desk!".
 
 ## Demo (Try it yourself!)
 
