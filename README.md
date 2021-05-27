@@ -41,7 +41,7 @@ With the [`removeWordsIfNoResults`](https://www.algolia.com/doc/api-reference/ap
 }
 ```
   
-If Algolia finds the name, it returns the name and corresponding Slack ID:
+If Algolia finds the name in the index, it returns the corresponding Slack ID:
   
 ```
 {
@@ -56,7 +56,7 @@ If Algolia finds the name, it returns the name and corresponding Slack ID:
    
 ### 💌📦 Notify people using [Slack bots](https://slack.com/help/articles/115005265703-Create-a-bot-for-your-workspace).
 
-If the Slack ID is found, a Slack bot sends a message to the user: "A :package: is waiting for you at the front desk!".
+The Slack bot sends a message: "A :package: is waiting for you at the front desk!".
 
 ## Demo (Try it yourself!)
 
