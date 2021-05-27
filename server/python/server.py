@@ -55,7 +55,7 @@ def scan():
         label = request.files['label']
         image = vision.Image(content=label.read())
         res = gc_vision.text_detection(image=image)
-        label_text = res.text_annotations[0].description
+        label_text = res.text_annotations[0].description.replace('\n', ' ')
     except Exception as err:
         return jsonify(error=str(err)), 400
 
