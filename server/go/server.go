@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 
 	vision "cloud.google.com/go/vision/apiv1"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/opt"
@@ -71,13 +72,17 @@ func handleScan(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Text:", annotation.Text)
 
+	// Replace all line break by spaces
+	re := regexp.MustCompile(`\n`)
+	text := re.ReplaceAllString(annotation.Text, "")
+
 	// Setup the Algolia client
 	a_client := search.NewClient(os.Getenv("ALGOLIA_APP_ID"), os.Getenv("ALGOLIA_API_KEY"))
 	index := a_client.InitIndex(os.Getenv("ALGOLIA_INDEX_NAME"))
 
 	// Search our employees index for a match, using the `removeWordsIfNoResults=allOptional` option.
 	// https://www.algolia.com/doc/api-reference/api-parameters/removeWordsIfNoResults/
-	result, err := index.Search(annotation.Text, opt.RemoveWordsIfNoResults("allOptional"))
+	result, err := index.Search(text, opt.RemoveWordsIfNoResults("allOptional"))
 	if err != nil {
 		writeJSON(w, nil, err)
 		log.Println(err)

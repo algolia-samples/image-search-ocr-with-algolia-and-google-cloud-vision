@@ -45,7 +45,7 @@ app.post("/scan", async (req, res) => {
             },
         });
         const detections = result.textAnnotations;
-        const labelText = detections[0].description;
+        const labelText = detections[0].description.replace(new RegExp("\n", "g"), " ");
 
         // Setup the Algolia client
         const algoliaClient = algoliaearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY)
