@@ -2,7 +2,7 @@
 
 This sample app lets you scan a shipping label with your phone and sends a Slack message to the recipient of the package. The app combines optical character recognition (OCR), Algolia search, and Slack notifications. 
 
-![A flowchart of the delivery scanner sample](https://blog-api.algolia.com/wp-content/uploads/2019/05/diagram-algo-package.jpg)
+![A flowchart of the delivery scanner sample](demo/diagram.png?raw=true)
 
 Read more about how we use this app at Algolia on the [Algolia blog](https://www.algolia.com/blog/engineering/simplifying-parcel-delivery-algolia/).
 
